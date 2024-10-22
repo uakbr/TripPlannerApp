@@ -1,0 +1,45 @@
+{
+  "version": 2,
+  "name": "trip-planner",
+  "builds": [
+    {
+      "src": "backend/server.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["backend/**/*"]
+      }
+    },
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "frontend/build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/$1"
+    }
+  ],
+  "env": {
+    "MONGO_URI": "@mongo_uri",
+    "REDIS_HOST": "@redis_host",
+    "REDIS_PORT": "@redis_port",
+    "OPENAI_API_KEY": "@openai_api_key",
+    "AMADEUS_CLIENT_ID": "@amadeus_client_id",
+    "AMADEUS_CLIENT_SECRET": "@amadeus_client_secret",
+    "OPENWEATHER_API_KEY": "@openweather_api_key",
+    "NEWSAPI_API_KEY": "@newsapi_api_key",
+    "TICKETMASTER_API_KEY": "@ticketmaster_api_key",
+    "JWT_SECRET": "@jwt_secret"
+  },
+  "buildEnv": {
+    "REACT_APP_BACKEND_URL": ""
+  }
+}
